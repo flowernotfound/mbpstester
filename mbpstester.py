@@ -1,6 +1,6 @@
-from speedtest.downloader import Downloader
-from speedtest.uploader import Uploader
-from speedtest.result_formatter import format_result
+from mbpstester.downloader import Downloader
+from mbpstester.uploader import Uploader
+from mbpstester.result_formatter import format_result
 from config import DOWNLOAD_URL, UPLOAD_URL, SIZE
 
 def main():

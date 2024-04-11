@@ -1,4 +1,4 @@
-from speedtest.speed_calculator import calculate_speed
+from mbpstester.speed_calculator import calculate_speed
 
 def format_result(download_speed, upload_speed):
     download_speed, download_unit = calculate_speed(download_speed, 1)

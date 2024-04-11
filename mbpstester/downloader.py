@@ -1,6 +1,6 @@
 import urllib.request
 import time
-from speedtest.progress_bar import ProgressBar
+from mbpstester.progress_bar import ProgressBar
 
 class Downloader:
     def __init__(self, url, size):
