@@ -1,19 +1,32 @@
 import sys
+import time
 
 class ProgressBar:
-    def __init__(self, total):
+    def __init__(self, total, bar_width=50, update_interval=0.1):
         self.total = total
+        self.bar_width = bar_width
+        self.update_interval = update_interval
         self.progress = 0
+        self.last_update_time = time.time()
 
     def update(self, progress):
         self.progress += progress
-        percent = self.progress / self.total * 100
-        sys.stdout.write(f"\rProgress: [{int(percent)}%]")
+        current_time = time.time()
+        if current_time - self.last_update_time >= self.update_interval:
+            self.display_progress()
+            self.last_update_time = current_time
+
+    def display_progress(self):
+        percent = self.progress / self.total
+        filled_width = int(self.bar_width * percent)
+        bar = '█' * filled_width + '-' * (self.bar_width - filled_width)
+        sys.stdout.write(f"\r[{bar}] {percent:.1%}")
         sys.stdout.flush()
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        self.display_progress()
         sys.stdout.write("\n")
         sys.stdout.flush()
