@@ -1,6 +1,6 @@
 import http.client
 import time
-from mbpstester.progress_bar import ProgressBar
+from modules.progress_bar import ProgressBar
 from urllib.parse import urlparse
 
 class Uploader:

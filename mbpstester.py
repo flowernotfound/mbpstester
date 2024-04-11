@@ -1,6 +1,6 @@
-from mbpstester.downloader import Downloader
-from mbpstester.uploader import Uploader
-from mbpstester.result_formatter import format_result
+from modules.downloader import Downloader
+from modules.uploader import Uploader
+from modules.result_formatter import format_result
 from config import DOWNLOAD_URL, UPLOAD_URL, SIZE
 
 def main():
