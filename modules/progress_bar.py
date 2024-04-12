@@ -28,5 +28,5 @@ class ProgressBar:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.display_progress()
-        sys.stdout.write("\n")
+        sys.stdout.write("\n\n")
         sys.stdout.flush()
