@@ -10,7 +10,7 @@ class Uploader:
 
     def upload(self):
         start_time = time.time()
-        with ProgressBar(self.size) as progress_bar:
+        with ProgressBar(self.size, "Uploading") as progress_bar:
             parsed_url = urlparse(self.url)
             conn = http.client.HTTPSConnection(parsed_url.netloc)
             conn.request("POST", parsed_url.path, b"0" * self.size)
