@@ -13,7 +13,6 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
-    # print(args)
     try:
         downloader = Downloader(DOWNLOAD_URL, SIZE)
         download_speed = downloader.measure_speed()
