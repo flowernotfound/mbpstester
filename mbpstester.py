@@ -1,8 +1,8 @@
 import argparse
-import datetime
 from modules.downloader import Downloader
 from modules.uploader import Uploader
 from modules.result_formatter import format_result
+from modules.write_log import write_log
 from config import DOWNLOAD_URL, UPLOAD_URL, SIZE
 
 def parse_arguments():
@@ -11,18 +11,9 @@ def parse_arguments():
     parser.add_argument('--log-file', type=str, default='mbpstester.log', help='Log file path')
     return parser.parse_args()
 
-def write_log(log_file, result):
-    try:
-        with open(log_file, 'a') as file:
-            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            file.write(f"{timestamp}\n")
-            file.write(result)
-            file.write("--------------------\n")
-    except IOError as e:
-        print(f"Error writing to log file: {str(e)}")
-
 def main():
     args = parse_arguments()
+    # print(args)
     try:
         downloader = Downloader(DOWNLOAD_URL, SIZE)
         download_speed = downloader.measure_speed()
