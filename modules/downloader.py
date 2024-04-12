@@ -9,7 +9,7 @@ class Downloader:
 
     def download(self):
         start_time = time.time()
-        with ProgressBar(self.size) as progress_bar:
+        with ProgressBar(self.size, "Downloading") as progress_bar:
             with urllib.request.urlopen(self.url) as response:
                 chunk_size = 1024
                 downloaded_size = 0
