@@ -25,27 +25,29 @@ def main():
         print("Error: Cannot skip both download and upload tests.")
         return
 
+    network_info = {}
     if args.network_info:
         network_info = get_network_info()
         if 'error' in network_info:
             print(f"Error getting network information: {network_info['error']}")
         else:
             print("Network Information:")
-            print(f"  Hostname: {network_info.get('hostname', 'N/A')}")
+            print(f"  Hostname:  {network_info.get('hostname', 'N/A')}")
             print(f"  Global IP: {network_info.get('global_ip', 'N/A')}")
-            print(f"  Provider: {network_info.get('provider', 'N/A')}")
+            print(f"  Provider:  {network_info.get('provider', 'N/A')}")
+            print("-" * 40)
 
-    if args.log:
-        write_log(args.log_file, result)
-
+    print("Speed Test Results:")
     try:
         if not args.no_download:
+            print("Download Test:")
             downloader = Downloader(DOWNLOAD_URL, SIZE)
             download_speed = downloader.measure_speed()
         else:
             download_speed = None
             
         if not args.no_upload:
+            print("Upload Test:")
             uploader = Uploader(UPLOAD_URL, SIZE)
             upload_speed = uploader.measure_speed()
         else:
@@ -55,10 +57,10 @@ def main():
         print(result)
         
         if args.log:
-            write_log(args.log_file, result)
+            write_log(args.log_file, result, network_info)
         
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-
+        
 if __name__ == "__main__":
     main()
