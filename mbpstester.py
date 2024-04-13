@@ -3,6 +3,7 @@ from modules.downloader import Downloader
 from modules.uploader import Uploader
 from modules.result_formatter import format_result
 from modules.write_log import write_log
+from modules.network_info import get_network_info
 from config import DOWNLOAD_URL, UPLOAD_URL, SIZE
 
 VERSION = '0.1.0'
@@ -14,6 +15,7 @@ def parse_arguments():
     parser.add_argument('--version', '-v', action='version', version=f'version {VERSION}', help='Show the version of the program and exit')
     parser.add_argument('--no-download', action='store_true', help='Skip the download test and only perform the upload test')
     parser.add_argument('--no-upload', action='store_true', help='Skip the upload test and only perform the download test')
+    parser.add_argument('--network-info', action='store_true', help='Display network information')
     return parser.parse_args()
 
 def main():
@@ -22,6 +24,16 @@ def main():
     if args.no_download and args.no_upload:
         print("Error: Cannot skip both download and upload tests.")
         return
+
+    if args.network_info:
+        network_info = get_network_info()
+        if 'error' in network_info:
+            print(f"Error getting network information: {network_info['error']}")
+        else:
+            print("Network Information:")
+            print(f"  Hostname: {network_info.get('hostname', 'N/A')}")
+            print(f"  Global IP: {network_info.get('global_ip', 'N/A')}")
+            print(f"  Provider: {network_info.get('provider', 'N/A')}")
 
     if args.log:
         write_log(args.log_file, result)
