@@ -13,7 +13,7 @@ def format_result(download_speed, upload_speed):
 
     if download_speed is not None:
         download_speed, download_unit = calculate_speed(download_speed, 1)
-        result += f"\nDownload speed: {download_speed:.2f} {download_unit}\n"
+        result += f"Download speed: {download_speed:10.2f} {download_unit}\n"
         if upload_speed is None:
             if download_speed > 100:
                 result += f"Download quality: {EXCELLENT_QUALITY}"
@@ -32,7 +32,7 @@ def format_result(download_speed, upload_speed):
 
     if upload_speed is not None:
         upload_speed, upload_unit = calculate_speed(upload_speed, 1)
-        result += f"Upload speed: {upload_speed:.2f} {upload_unit}\n"
+        result += f"Upload speed:   {upload_speed:10.2f} {upload_unit}\n"
         if download_speed is None:
             if upload_speed > 30:
                 result += f"Upload quality: {EXCELLENT_QUALITY}"

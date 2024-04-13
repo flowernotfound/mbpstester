@@ -29,5 +29,5 @@ class ProgressBar:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.display_progress()
-        sys.stdout.write("\n\n")
+        sys.stdout.write("\n")  # 改行を1つだけにする
         sys.stdout.flush()
