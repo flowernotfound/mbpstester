@@ -1,4 +1,5 @@
 import argparse
+from colorama import Fore
 from modules.downloader import Downloader
 from modules.uploader import Uploader
 from modules.result_formatter import format_result
@@ -38,17 +39,18 @@ def main():
             print("-" * 40)
 
     print("Speed Test Results:")
+    print("-" * 40)
     try:
         if not args.no_download:
             print("Download Test:")
-            downloader = Downloader(DOWNLOAD_URL, SIZE)
+            downloader = Downloader(DOWNLOAD_URL, SIZE, bar_style={'color': Fore.BLUE})
             download_speed = downloader.measure_speed()
         else:
             download_speed = None
             
         if not args.no_upload:
             print("Upload Test:")
-            uploader = Uploader(UPLOAD_URL, SIZE)
+            uploader = Uploader(UPLOAD_URL, SIZE, bar_style={'color': Fore.GREEN})
             upload_speed = uploader.measure_speed()
         else:
             upload_speed = None
@@ -61,6 +63,6 @@ def main():
         
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-        
+                
 if __name__ == "__main__":
     main()
