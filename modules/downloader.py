@@ -3,7 +3,7 @@ import time
 from modules.progress_bar import ProgressBar
 
 class Downloader:
-    def __init__(self, url, size):
+    def __init__(self, url, size, bar_style=None):
         self.url = url
         self.size = size
 

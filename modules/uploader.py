@@ -4,7 +4,7 @@ from modules.progress_bar import ProgressBar
 from urllib.parse import urlparse
 
 class Uploader:
-    def __init__(self, url, size):
+    def __init__(self, url, size, bar_style=None):
         self.url = url
         self.size = size
 
