@@ -1,7 +1,7 @@
-document.md
-config.py
-__pycache__/
-README.md
-.DS_Store
-mbpstester.log
 env/
+__pycache__/
+.DS_Store
+document.md
+README.md
+mbpstester.log
+config.py

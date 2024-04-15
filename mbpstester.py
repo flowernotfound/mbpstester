@@ -1,10 +1,12 @@
 import argparse
+import json
 from colorama import Fore
 from modules.downloader import Downloader
 from modules.uploader import Uploader
 from modules.result_formatter import format_result
 from modules.write_log import write_log
 from modules.network_info import get_network_info
+from modules.result_formatter import format_result_json
 from config import DOWNLOAD_URL, UPLOAD_URL, SIZE
 
 VERSION = '0.1.0'
@@ -17,6 +19,7 @@ def parse_arguments():
     parser.add_argument('--no-download', action='store_true', help='Skip the download test and only perform the upload test')
     parser.add_argument('--no-upload', action='store_true', help='Skip the upload test and only perform the download test')
     parser.add_argument('--network-info', action='store_true', help='Display network information')
+    parser.add_argument('--json', type=str, help='Output the results in JSON format to the specified file')
     return parser.parse_args()
 
 def main():
@@ -30,39 +33,70 @@ def main():
     if args.network_info:
         network_info = get_network_info()
         if 'error' in network_info:
-            print(f"Error getting network information: {network_info['error']}")
-        else:
-            print("Network Information:")
-            print(f"  Hostname:  {network_info.get('hostname', 'N/A')}")
-            print(f"  Global IP: {network_info.get('global_ip', 'N/A')}")
-            print(f"  Provider:  {network_info.get('provider', 'N/A')}")
-            print("-" * 40)
+            if args.json:
+                error_result = json.dumps({'error': network_info['error']}, indent=2)
+                try:
+                    with open(args.json, 'w') as json_file:
+                        json_file.write(error_result)
+                    print(f"JSON error output saved to {args.json}")
+                except IOError as e:
+                    print(f"Error writing JSON file: {str(e)}")
+            else:
+                print(f"Error getting network information: {network_info['error']}")
+            return
 
-    print("Speed Test Results:")
-    print("-" * 40)
     try:
         if not args.no_download:
-            print("Download Test:")
+            if not args.json:
+                print("Download Test:")
             downloader = Downloader(DOWNLOAD_URL, SIZE, bar_style={'color': Fore.BLUE})
             download_speed = downloader.measure_speed()
         else:
             download_speed = None
             
         if not args.no_upload:
-            print("Upload Test:")
+            if not args.json:
+                print("Upload Test:")
             uploader = Uploader(UPLOAD_URL, SIZE, bar_style={'color': Fore.GREEN})
             upload_speed = uploader.measure_speed()
         else:
             upload_speed = None
             
-        result = format_result(download_speed, upload_speed)
-        print(result)
+        if args.json:
+            result = format_result_json(download_speed, upload_speed, network_info if args.network_info else None)
+            try:
+                with open(args.json, 'w') as json_file:
+                    json_file.write(result)
+                print(f"JSON output saved to {args.json}")
+            except IOError as e:
+                print(f"Error writing JSON file: {str(e)}")
+        else:
+            if args.network_info:
+                print("Network Information:")
+                print(f"  Hostname:  {network_info.get('hostname', 'N/A')}")
+                print(f"  Global IP: {network_info.get('global_ip', 'N/A')}")
+                print(f"  Provider:  {network_info.get('provider', 'N/A')}")
+                print("-" * 40)
+
+            print("Speed Test Results:")
+            print("-" * 40)
+            result = format_result(download_speed, upload_speed)
+            print(result)
         
         if args.log:
-            write_log(args.log_file, result, network_info)
+            write_log(args.log_file, result, network_info if args.network_info else None)
         
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        if args.json:
+            error_result = json.dumps({'error': str(e)}, indent=2)
+            try:
+                with open(args.json, 'w') as json_file:
+                    json_file.write(error_result)
+                print(f"JSON error output saved to {args.json}")
+            except IOError as e:
+                print(f"Error writing JSON file: {str(e)}")
+        else:
+            print(f"An error occurred: {str(e)}")
                 
 if __name__ == "__main__":
     main()

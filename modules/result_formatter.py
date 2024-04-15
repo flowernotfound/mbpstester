@@ -1,4 +1,5 @@
 from modules.speed_calculator import calculate_speed
+import json
 
 EXCELLENT_QUALITY = "Excellent"
 VERY_GOOD_QUALITY = "Very Good"
@@ -67,3 +68,30 @@ def format_result(download_speed, upload_speed):
             result += f"Connection quality: {VERY_POOR_QUALITY}"
 
     return result
+
+def format_result_json(download_speed, upload_speed, network_info=None):
+    result = {
+        'download_speed': download_speed,
+        'upload_speed': upload_speed
+    }
+    
+    if download_speed is not None and upload_speed is not None:
+        if download_speed > 100 and upload_speed > 30:
+            result['connection_quality'] = EXCELLENT_QUALITY
+        elif download_speed > 50 and upload_speed > 10:
+            result['connection_quality'] = VERY_GOOD_QUALITY
+        elif download_speed > 20 and upload_speed > 5:
+            result['connection_quality'] = GOOD_QUALITY
+        elif download_speed > 10 and upload_speed > 2:
+            result['connection_quality'] = AVERAGE_QUALITY
+        elif download_speed > 5 and upload_speed > 1:
+            result['connection_quality'] = BELOW_AVERAGE_QUALITY
+        elif download_speed > 1 and upload_speed > 0.5:
+            result['connection_quality'] = POOR_QUALITY
+        else:
+            result['connection_quality'] = VERY_POOR_QUALITY
+    
+    if network_info:
+        result['network_info'] = network_info
+    
+    return json.dumps(result, indent=2)

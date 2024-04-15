@@ -12,6 +12,6 @@ def write_log(log_file, result, network_info):
                 file.write(f"  Provider:  {network_info.get('provider', 'N/A')}\n")
             file.write("Speed Test Results:\n")
             file.write(result)
-            file.write("--------------------\n")
+            file.write("\n--------------------\n")
     except IOError as e:
         print(f"Error writing to log file: {str(e)}")
