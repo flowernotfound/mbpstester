@@ -1,6 +1,6 @@
-# mbpstester
+# Mbpstester
 
-mbpstester is a command-line tool for measuring the download and upload speeds of your internet connection. It performs multiple measurements and provides an average speed along with a connection quality assessment. The tool also offers options to display network information and save the results in JSON format.
+Mbpstester is a command-line tool for measuring the download and upload speeds of your internet connection. It performs multiple measurements and provides an average speed along with a connection quality assessment. The tool also offers options to display network information and save the results in JSON format.
 
 ## Features
 
