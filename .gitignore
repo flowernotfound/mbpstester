@@ -2,6 +2,5 @@ env/
 __pycache__/
 .DS_Store
 document.md
-# README.md
 mbpstester.log
 # config.py
