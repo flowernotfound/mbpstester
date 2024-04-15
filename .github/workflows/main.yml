@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout
         name: Check out repository code
 
       - name: Set up Python 3.x
-        uses: actions/setup-python@latest
+        uses: actions/setup-python
         with:
           python-version: "3.x"
 
