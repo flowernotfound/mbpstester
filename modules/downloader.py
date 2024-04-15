@@ -22,7 +22,7 @@ class Downloader:
         end_time = time.time()
         return end_time - start_time
 
-    def measure_speed(self, num_measurements=3):
+    def measure_speed(self, num_measurements=5):
         total_time = 0
         for _ in range(num_measurements):
             total_time += self.download()
