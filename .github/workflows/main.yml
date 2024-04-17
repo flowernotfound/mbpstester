@@ -29,8 +29,12 @@ jobs:
           python mbpstester.py
           python mbpstester.py --version
           python mbpstester.py --log
+          python mbpstester.py --log test.log
           python mbpstester.py --log --network-info
           python mbpstester.py --no-download
           python mbpstester.py --no-upload
           python mbpstester.py --network-info
           python mbpstester.py --json test_output.json
+          python mbpstester.py --size 1
+          python mbpstester.py --size 10
+          
