@@ -11,7 +11,6 @@ from config import DOWNLOAD_URL, UPLOAD_URL
 
 SIZE_1MB = 1 * 1024 * 1024
 SIZE_10MB = 10 * 1024 * 1024
-SIZE_100MB = 100 * 1024 * 1024
 VERSION = '0.1.0'
 
 def parse_arguments():
@@ -23,7 +22,7 @@ def parse_arguments():
     parser.add_argument('--no-upload', action='store_true', help='Skip the upload test and only perform the download test')
     parser.add_argument('--network-info', action='store_true', help='Display network information')
     parser.add_argument('--json', type=str, help='Output the results in JSON format to the specified file')
-    parser.add_argument('--size', type=int, choices=[1, 10, 100], default=1, help='Specify the size of the data to use for testing (1 MB, 10 MB, or 100 MB)')
+    parser.add_argument('--size', type=int, choices=[1, 10], default=1, help='Specify the size of the data to use for testing (1 MB, 10 MB)')
     return parser.parse_args()
 
 def main():
@@ -31,8 +30,9 @@ def main():
     data_size = {
         1: SIZE_1MB,
         10: SIZE_10MB,
-        100: SIZE_100MB
     }[args.size]
+    
+    print(f"data_size: {data_size / 1024 / 1024}MB") # debug
     
     if args.no_download and args.no_upload:
         print("Error: Cannot skip both download and upload tests.")
@@ -58,7 +58,7 @@ def main():
         if not args.no_download:
             if not args.json:
                 print("Download Test:")
-            downloader = Downloader(DOWNLOAD_URL, data_size, bar_style={'color': Fore.BLUE})
+            downloader = Downloader(DOWNLOAD_URL, data_size, bar_style={'filled': '█', 'empty': '-', 'color': Fore.BLUE})
             download_speed = downloader.measure_speed()
         else:
             download_speed = None
@@ -66,7 +66,7 @@ def main():
         if not args.no_upload:
             if not args.json:
                 print("Upload Test:")
-            uploader = Uploader(UPLOAD_URL, data_size, bar_style={'color': Fore.GREEN})
+            uploader = Uploader(UPLOAD_URL, data_size, bar_style={'filled': '█', 'empty': '-', 'color': Fore.GREEN})
             upload_speed = uploader.measure_speed()
         else:
             upload_speed = None
