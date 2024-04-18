@@ -1,22 +1,35 @@
-import requests
+import http.client
 import time
 from modules.progress_bar import ProgressBar
+from urllib.parse import urlparse
 from colorama import Fore
 
 class Uploader:
-    def __init__(self, url, size, timeout=60, chunk_size=1024, bar_style=None):
+    def __init__(self, url, size, timeout=30, chunk_size=1024, bar_style=None):
         self.url = url
         self.size = size
         self.timeout = timeout
         self.chunk_size = chunk_size
-        self.bar_style = bar_style or {'color': Fore.GREEN, 'filled': '█', 'empty': '-'}
+        self.bar_style = bar_style or {'color': Fore.GREEN}
 
     def upload(self):
         start_time = time.time()
         with ProgressBar(self.size, "Uploading", bar_style=self.bar_style) as progress_bar:
-            data = b"0" * self.size
-            response = requests.post(self.url, data=data, timeout=self.timeout)
-            progress_bar.update(self.size)
+            parsed_url = urlparse(self.url)
+            conn = http.client.HTTPSConnection(parsed_url.netloc, timeout=self.timeout)
+            conn.putrequest("POST", parsed_url.path)
+            conn.putheader("Content-Length", str(self.size))
+            conn.endheaders()
+
+            uploaded_size = 0
+            while uploaded_size < self.size:
+                chunk = b"0" * min(self.chunk_size, self.size - uploaded_size)
+                conn.send(chunk)
+                uploaded_size += len(chunk)
+                progress_bar.update(len(chunk))
+
+            response = conn.getresponse()
+            conn.close()
         end_time = time.time()
         return end_time - start_time
 
