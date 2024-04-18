@@ -37,4 +37,3 @@ jobs:
           python mbpstester.py --json test_output.json
           python mbpstester.py --size 1
           python mbpstester.py --size 10
-          
