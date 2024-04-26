@@ -27,12 +27,14 @@ jobs:
       - name: Run tests
         run: |
           python mbpstester.py
+          python mbpstester.py --help
           python mbpstester.py --version
           python mbpstester.py --log
           python mbpstester.py --log --log-file test.log
           python mbpstester.py --log --network-info
           python mbpstester.py --no-download
           python mbpstester.py --no-upload
+          python mbpstester.py --no-upload --no-download
           python mbpstester.py --network-info
           python mbpstester.py --json test_output.json
           python mbpstester.py --size 1
