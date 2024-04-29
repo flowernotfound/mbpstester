@@ -7,7 +7,9 @@ from modules.result_formatter import format_result
 from modules.write_log import write_log
 from modules.network_info import get_network_info
 from modules.result_formatter import format_result_json
-from config import DOWNLOAD_URL, UPLOAD_URL
+DOWNLOAD_URL_DEFAULT = "https://storage.googleapis.com/speedtest-dummy/dummy_1MB.txt"
+DOWNLOAD_URL_10MB = "https://storage.googleapis.com/speedtest-dummy/dummy_10MB.txt"
+UPLOAD_URL = "https://asia-northeast1-speedtest-420007.cloudfunctions.net/v1"
 
 SIZE_1MB = 1 * 1024 * 1024
 SIZE_10MB = 10 * 1024 * 1024
@@ -31,6 +33,7 @@ def main():
         1: SIZE_1MB,
         10: SIZE_10MB,
     }[args.size]
+    download_url = DOWNLOAD_URL_DEFAULT if args.size == 1 else DOWNLOAD_URL_10MB
     
     print(f"data_size: {data_size / 1024 / 1024}MB") # debug
     
@@ -58,7 +61,7 @@ def main():
         if not args.no_download:
             if not args.json:
                 print("Download Test:")
-            downloader = Downloader(DOWNLOAD_URL, data_size, bar_style={'filled': '█', 'empty': '-', 'color': Fore.BLUE})
+            downloader = Downloader(download_url, data_size, bar_style={'filled': '█', 'empty': '-', 'color': Fore.BLUE})
             download_speed = downloader.measure_speed()
         else:
             download_speed = None

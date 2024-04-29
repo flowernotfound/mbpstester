@@ -65,6 +65,7 @@ Available options:
 - `--no-upload`: Skip the upload test and only perform the download test
 - `--network-info`: Display network information
 - `--json JSON_FILE`: Output the results in JSON format to the specified file
+- `--size {1,10}`: Specify the size of the data to use for testing (1 MB, 10 MB)
 
 Examples:
 
