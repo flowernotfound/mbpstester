@@ -15,7 +15,7 @@ jobs:
         name: Check out repository code
 
       - name: pray
-        run: cat .github/configs/buddha.txt
+        run: cat test/buddha.txt
 
       - name: Set up Python 3.x
         uses: actions/setup-python@v5
