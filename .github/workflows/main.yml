@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v4
         name: Check out repository code
 
-      # - name: pray
-      #   run: cat test/buddha.txt
+      - name: pray
+        run: cat test/buddha.txt
 
       - name: Set up Python 3.x
         uses: actions/setup-python@v5
