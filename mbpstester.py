@@ -10,9 +10,9 @@ from modules.result_formatter import format_result_json
 DOWNLOAD_URL_DEFAULT = "https://storage.googleapis.com/speedtest-dummy/dummy_1MB.txt"
 DOWNLOAD_URL_10MB = "https://storage.googleapis.com/speedtest-dummy/dummy_10MB.txt"
 UPLOAD_URL = "https://asia-northeast1-speedtest-420007.cloudfunctions.net/v1"
-
 SIZE_1MB = 1 * 1024 * 1024
 SIZE_10MB = 10 * 1024 * 1024
+
 VERSION = '0.1.0'
 
 def parse_arguments():
